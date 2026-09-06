@@ -1,29 +1,21 @@
 ---
 name: centricmem-agent
-description: >-
-  Organises and retrieves Markdown memory on the hosted CentricMem librarian via
-  host MCP (search, notes, decisions, transcripts). Use when starting a session,
-  filing Non-Micro work, searching project memory, connecting an agent key, or
-  refreshing this Skill. Never write Inbox, never curl librarian HTTP, never
-  paste keys in chat.
-license: PolyForm-Noncommercial-1.0.0
-compatibility: >-
-  Requires host MCP at https://mem.centricmem.com/mcp (or stdio
-  centricmem-host). CLI >=0.21.14 for connect --device.
+description: "Organises and retrieves Markdown memory on the hosted CentricMem librarian via host MCP (search, notes, decisions, transcripts). Use when starting a session, filing Non-Micro work, searching project memory, connecting an agent key, or refreshing this Skill. Never write Inbox, never curl librarian HTTP, never paste keys in chat."
+compatibility: "Requires host MCP at https://mem.centricmem.com/mcp (or stdio centricmem-host). CLI >=0.21.14 for connect --device."
 metadata:
-  version: 0.21.26
-  compatible_cli: '>=0.21.14'
-  changelog_url: 'https://github.com/zeyu-j/centricmem-skill/blob/main/CHANGELOG.md'
+  version: "0.21.27"
+  compatible_cli: ">=0.21.14"
+  changelog_url: https://github.com/zeyu-j/centricmem-skill/blob/main/CHANGELOG.md
   category: development
   source:
     repository: 'https://github.com/zeyu-j/centricmem-skill'
     path: skills/centricmem-agent
     license_path: LICENSE
     ref: main
-    commit: 299c6f0c32bf7cb32cb70de2bbb87c2f135d8517
+    commit: 284ddb5e02cff752efb6feb4d2702f217d1fb66c
 ---
 
-# CentricMem Agent Skill v0.21.26
+# CentricMem Agent Skill v0.21.27
 
 Glossary: **Library** (one per person) → **Shelf** (pass `shelf=<id>` or `library=<id>`) → **Card** (Markdown: Identity / Details / Tags / Body, [REFERENCE.md](REFERENCE.md)). Inbox is a system shelf, never a sweep target.
 
@@ -46,9 +38,9 @@ CentricMem is the **manager layer** (organise / retrieve / cross-agent store) **
 
 ## 2. Start
 
-`cm_health` then `cm_ambient`. Ignore a stale `.ambient.md`. Unreachable or `state=UNINITIALIZED`: **say once** — do not bootstrap. Writes need a **named shelf** — never Inbox / `unclassified`, even when `cwd_project=(unlinked)`. `corpus=<slug>` → `library=` that slug. Never treat ambient **text** “Skill outdated” as truth (librarian hub copy). This file is `~/.cursor/skills/centricmem-agent/SKILL.md`.
+`cm_health` then `cm_ambient`. Ignore a stale `.ambient.md`. Unreachable or `state=UNINITIALIZED`: **say once** — do not bootstrap. Writes need a **named shelf** — never Inbox / `unclassified`, even when `cwd_project=(unlinked)`. `corpus=<slug>` → `library=` that slug. Never treat ambient **text** “Skill outdated” as truth (librarian hub copy). This file is the installed `centricmem-agent` Skill (path depends on the agent).
 
-**Once this chat, after health/ambient:** compare this file’s `version` to `skill_latest` on `cm_health` / `cm_ambient`. If that field is null, GET `https://raw.githubusercontent.com/zeyu-j/centricmem-skill/main/skills/centricmem-agent/SKILL.md` and parse `version`. If published is newer: `npx --yes skills add zeyu-j/centricmem-skill --skill centricmem-agent -g -y`. Tell the human it is on disk; **this chat still uses the already-loaded Skill**; the next chat uses the new one. If this file is newer, or fetch/npx fails: continue. Never `setup --install-skill` for this refresh.
+**Once this chat, after health/ambient:** compare this file’s `metadata.version` to `skill_latest` on `cm_health` / `cm_ambient`. If that field is null, GET `https://raw.githubusercontent.com/zeyu-j/centricmem-skill/main/skills/centricmem-agent/SKILL.md` and parse `metadata.version`. If published is newer: `npx --yes skills add zeyu-j/centricmem-skill --skill centricmem-agent -g -y`. Tell the human it is on disk; **this chat still uses the already-loaded Skill**; the next chat uses the new one. If this file is newer, or fetch/npx fails: continue. Never `setup --install-skill` for this refresh.
 
 **Once after Skill install / first ambient this chat:** tell the human how they use it (their language). They keep talking here. They do **not** have to say 收尾 / wrap up / log this. You file when the work is real, before you stop — closing the tab does not run this Skill. Cursor memories stay. They do not paste chats, tokens, or CLI. They search via you or log in to download originals. "Don't log" skips that sweep.
 
